@@ -8,9 +8,9 @@ from datetime import datetime
 # kevinb@deepinstinct.com
 # Script for analyzing ONTAP verbose logs 
 # to calculate avg scantime, througput and processing time
-# 
+# from: https://github.com/Boerner1337/DI-helper-scripts
 # Version 1.0.0 March 2024
-#
+# 
 # 
 # All rights reserved. 
 print("""
