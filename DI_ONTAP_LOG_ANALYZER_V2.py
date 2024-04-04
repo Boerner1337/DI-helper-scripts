@@ -9,7 +9,7 @@ import csv
 # Script for analyzing ONTAP verbose logs 
 # to calculate avg scantime, througput and processing time
 # from: https://github.com/Boerner1337/DI-helper-scripts
-# Version 2.0.0 March 2024
+# Version 2.0.1 March 2024
 # 
 # 
 # All rights reserved. 
