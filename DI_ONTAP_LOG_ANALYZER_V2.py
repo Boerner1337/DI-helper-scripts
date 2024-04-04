@@ -42,7 +42,7 @@ def parse_ontap_log_with_correct_throughput(logfile_path, output_path=None, data
     
     events = {}
     
-    with open(logfile_path, 'r') as logfile:
+    with open(logfile_path, 'r', encoding='utf-8', errors='replace') as logfile:
         for line in logfile:
             sending_match = sending_re.match(line)
             completion_match = completion_re.match(line)
