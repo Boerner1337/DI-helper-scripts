@@ -10,7 +10,7 @@ import csv
 # Script for analyzing ONTAP verbose logs 
 # to calculate avg scantime, throughput and processing time
 # from: https://github.com/Boerner1337/DI-helper-scripts
-# Version 2.1.0 August 2024
+# Version 4.1.0 August 2024
 # 
 # 
 # All rights reserved. 
@@ -100,6 +100,8 @@ if __name__ == "__main__":
 
     display_ascii_art()
 
+    events = {}
+
     if args.directory:
         events = process_directory(args.directory, args.verbose, args.start_id)
     elif args.path:
@@ -113,27 +115,35 @@ if __name__ == "__main__":
         all_ids = sorted(events.keys())
         total_ids = len(all_ids)
         lowest_id, highest_id = min(all_ids), max(all_ids)
-        
-        print(f"Total IDs: {total_ids}, Lowest ID: {lowest_id}, Highest ID: {highest_id}")
-        
-        if args.start_id is not None:
-            nearest_id = next((id for id in all_ids if id >= args.start_id), None)
-            if nearest_id is not None:
-                print(f"Using ID: {nearest_id} (nearest to requested {args.start_id})")
-            else:
-                print(f"No ID found equal or higher than {args.start_id}. Exiting.")
-                exit(1)
+
+        if args.directory:
+            print(f"Total IDs processed: {total_ids}")
         else:
-            print("Calculating from the lowest ID found.")
+            print(f"Total IDs: {total_ids}, Lowest ID: {lowest_id}, Highest ID: {highest_id}")
+
+            if args.start_id is not None:
+                nearest_id = next((id for id in all_ids if id >= args.start_id), None)
+                if nearest_id is not None:
+                    print(f"Using ID: {nearest_id} (nearest to requested {args.start_id})")
+                else:
+                    print(f"No ID found equal or higher than {args.start_id}. Exiting.")
+                    exit(1)
+            else:
+                print("Calculating from the lowest ID found.")
         
         avg_scan_time, total_processing_time, scan_times = calculate_statistics(events, args.verbose)
-        print(f"Average Scan Time: {round(avg_scan_time, 2)} ms")
-        print(f"Total Processing Time: {round(total_processing_time, 2)} seconds")
-    
+
+        if args.directory:
+            print(f"Average scan time for all files processed: {round(avg_scan_time, 2)} ms")
+            print(f"Total processing time for all files processed: {round(total_processing_time, 2)} seconds")
+        else:
+            print(f"Average Scan Time: {round(avg_scan_time, 2)} ms")
+            print(f"Total Processing Time: {round(total_processing_time, 2)} seconds")
+
         if args.data_size:
             throughput = float(args.data_size) / total_processing_time  # Corrected throughput calculation
             print(f"Throughput: {round(throughput, 2)} MB/s")
-    
+
         if args.output:
             with open(args.output, 'w', newline='') as csvfile:
                 writer = csv.writer(csvfile)
