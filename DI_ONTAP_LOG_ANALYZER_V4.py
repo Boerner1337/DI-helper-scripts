@@ -15,6 +15,30 @@ import csv
 # 
 # All rights reserved. 
 
+# This script processes ONTAP verbose logs to calculate average scan time, throughput, and total processing time.
+# It supports both single log file analysis and multiple log files within a directory.
+# The output can be displayed on the console and saved to a CSV file.
+
+# Parameters:
+# -p, --path: Path to a single log file to calculate scan times.
+#   Example: python script.py -p /path/to/logfile.log
+# 
+# -d, --directory: Directory containing multiple log files to process all of them and calculate the average scan time.
+#   Example: python script.py -d /path/to/logs_directory
+# 
+# -o, --output: Path to the output CSV file.
+#   Example: python script.py -p /path/to/logfile.log -o /path/to/output.csv
+# 
+# -size, --data-size: Size of a dataset in MB for throughput calculation.
+# 
+#   Example: python script.py -p /path/to/logfile.log -size 500
+# 
+# -v, --verbose: Enable verbose output for detailed logging.
+#   Example: python script.py -p /path/to/logfile.log -v
+# 
+# -id, --start-id: Start calculations from this specific ID.
+#   Example: python script.py -p /path/to/logfile.log -id 1000
+
 def display_ascii_art():
     ascii_art = """
     ____                     ____           __  _            __
